@@ -1,5 +1,4 @@
-class Enviador :
-    pass
+from spam.enviador_de_email import Enviador
 
 
 def test_ciar_enviar_email() :
