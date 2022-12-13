@@ -1,14 +1,40 @@
-from spam.enviador_de_email import Enviador
+import pytest
+
+from spam.enviador_de_email import Enviador, EmailInvalido
 
 
-def test_ciar_enviar_email() :
+def test_ciar_enviador_de_email() :
     enviador = Enviador ()
     assert enviador is not None
 
-def test_remetente():
+
+@pytest.mark.parametrize(
+    'destinatario',
+    ['adilson.garcia2006@hotmail.com',
+    'rosana.garcia2009@gmail.com.br'])
+
+def test_remetente(destinatario):
     enviador = Enviador()
-    enviador.enviar(
-        'adilsom.garcia2006@hotmail.com',
-    'rosana.garcia2009@gmail.com.br',
-    'Título: Viagem para as barramas',
-    'Passagens de 1ª classe já compradas.')
+    resultado = enviador.enviar(
+        destinatario,
+        'adilson.garcia2006@hotmail.com',
+        'Título: Viagem para as barramas',
+        'Passagens de 1ª classe já compradas.'
+        )
+    assert destinatario in resultado
+
+@pytest.mark.parametrize(
+    'remetente',
+    ['', 'adilsom.garcia2006@hotmail.com']
+)
+
+def test_remetente(remetente):
+    enviador = Enviador()
+    with pytest.raises(EmailInvalido):
+        resultado = enviador.enviar(
+            remetente,
+            'rosana.garcia2006@hotmail.com',
+            'Título: Viagem para as barramas',
+            'Passagens de 1ª classe já compradas.'
+            )
+        assert remetente in resultado
