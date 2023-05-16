@@ -25,7 +25,7 @@ def test_remetente(destinatario):
 
 @pytest.mark.parametrize(
     'remetente',
-    ['', 'adilsom.garcia2006@hotmail.com']
+    ['', 'adilson.garcia2006@hotmail.com']
 )
 
 def test_remetente(remetente):
