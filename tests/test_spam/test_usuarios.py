@@ -1,3 +1,6 @@
+import pytest
+
+
 class Sessao :
     contador = 0
     usuario = []
@@ -11,7 +14,7 @@ class Sessao :
         return self.usuario
 
     def roll_back(self):
-        pass
+        self.usuario.clear()
 
     def fechar(self):
         pass
@@ -30,14 +33,26 @@ class Usuario :
         self.nome = nome
         self.id=None
 
+@pytest.fixture
+def conexao():
+    # Setup
+    conexao_obj = Conexao()
+    yield conexao_obj
+    # Tear Down
+    conexao_obj.fechar()
+@pytest.fixture
+def sessao(conexao):
+    sessao_obj = conexao.gerar_sessao()
+    yield sessao_obj
+    sessao_obj.roll_back ()  # roll_back desfaz todas as alterações feitas no ambiente de teste
+    sessao_obj.fechar()
 
-def test_salvar_usuario():
+
+def test_salvar_usuario(sessao):
     # etapa de setup
     # responsável por gerar a autenticação do banco, como login e senha do bd para poder se
     # conectar.
-    conexao = Conexao()
     # serve para efetuar as alterações no bd, como salvamento, buscas, etc...
-    sessao = conexao.gerar_sessao()
     # criando um usuario
     usuario=Usuario(nome='Adilson')
     # salva o usuario no bd
@@ -45,17 +60,14 @@ def test_salvar_usuario():
     # certifica se o usuario foi salvo com um id numerico
     assert isinstance(usuario.id, int)
     # etapa de fear down
-    sessao.roll_back() # roll_back desfaz todas as alterações feitas no ambiente de teste
-    sessao.fechar()
-    # apos interagir com a conexão sw faz necessario fechar a sessao e conexao
-    conexao.fechar()
 
-def test_listar_usuarios():
+    # apos interagir com a conexão sw faz necessario fechar a sessao e conexao
+
+
+def test_listar_usuarios(conexao, sessao):
     # etapa de setup
-    conexao = Conexao()
     # responsável por gerar a autenticação do banco, como login e senha do bd para poder
     # se conectar.
-    sessao = conexao.gerar_sessao()
     # serve para efetuar as alterações no bd, como salvamento, buscas, etc...
     usuarios=[Usuario(nome='Adilson'), Usuario(nome='Rosana')]
     # criando um usuario
@@ -66,8 +78,4 @@ def test_listar_usuarios():
     # como uma sessao chamamos o metodo listar de uma sessao foi salvo com um id numerico
     assert usuarios == sessao.listar()
     # etapa de fear down
-    sessao.roll_back()
-    # roll_back desfaz todas as alterações feitas no ambiente de teste
-    sessao.fechar()
-    # apos interagir com a conexão sw faz necessario fechar a sessao e conexao
-    conexao.fechar()
+
