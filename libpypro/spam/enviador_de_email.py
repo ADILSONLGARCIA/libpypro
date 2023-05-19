@@ -1,1 +1,2 @@
-
+class Enviador :
+    pass
