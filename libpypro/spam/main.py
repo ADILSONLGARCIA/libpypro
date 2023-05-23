@@ -1,13 +1,16 @@
-class SpamSender:
-    def __init__(self, session, sender):
-        self.session = session
-        self.sender = sender
+class EnviadorDeSpan:
+    def __init__(self, sessao: object, enviador: object) -> object:
+        self.sessao = sessao
+        self.enviador = enviador
 
-    def send_emails(self, shipper, title, body):
-        for user in self.session.list():
-            self.sender.send(
-                shipper,
-                user.email,
-                title,
-                body
+    def enviar_emails(self, remetente, titulo, corpo):
+        for user in self.sessao.listar():
+            self.enviador.enviar(
+                remetente,
+                titulo,
+                corpo
             )
+
+
+class EnviadorDeSpan :
+    pass
