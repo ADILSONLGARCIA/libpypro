@@ -12,5 +12,3 @@ class EnviadorDeSpan:
             )
 
 
-class EnviadorDeSpan :
-    pass
