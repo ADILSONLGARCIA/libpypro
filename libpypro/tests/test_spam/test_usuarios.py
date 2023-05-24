@@ -31,7 +31,7 @@ class Conexao:
 
 
 class Usuario :
-    def __init__(self, nome):
+    def __init__(self, nome, email='adilson.garcia2006@hotmail.com') :
         self.nome = nome
         self.id=None
 
@@ -39,7 +39,7 @@ class Usuario :
 def test_salvar_usuario(sessao):
 
     # criando um usuario
-    usuario=Usuario(nome='Adilson')
+    usuario=Usuario(nome='Adilson', email='adilson.garcia2006@hotmail.com')
     # salva o usuario no bd
     sessao.salvar( usuario )
     # certifica se o usuario foi salvo com um id numerico
@@ -52,7 +52,10 @@ def test_listar_usuarios(conexao, sessao):
     # responsável por gerar a autenticação do banco, como login e senha do bd para poder
     # se conectar.
     # serve para efetuar as alterações no bd, como salvamento, buscas, etc...
-    usuarios=[Usuario(nome='Adilson'), Usuario(nome='Rosana')]
+    usuarios=[
+        Usuario ( nome = 'Adilson' ),
+        Usuario ( nome = 'Rosana' )
+    ]
     # criando um usuario
     for usuario in usuarios:
         # salva os usuarios no bd
