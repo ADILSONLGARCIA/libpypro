@@ -1,8 +1,11 @@
 class Enviador :
-    def enviador(self, shipper, recipient, title, body):
-        if '@' not in shipper:
-            raise InvalidEmail(f'Invalid shipper address: {shipper}')
-        return shipper
+    def __init__(self):
+        self.qtd_email_enviados = 0
 
-class InvalidEmail(Exception):
+    def enviar(self, remetente, destinataio, assunto, corpo):
+        if '@' not in remetente:
+            raise EmailInvalido(f'Invalid shipper address: {remetente}')
+        self.qtd_email_enviados += 1
+        return remetente
+class EmailInvalido(Exception):
     pass

@@ -3,12 +3,11 @@ class EnviadorDeSpan:
         self.sessao = sessao
         self.enviador = enviador
 
-    def enviar_emails(self, remetente, titulo, corpo):
+    def enviar_emails(self, remetente, assunto, corpo, usuario):
         for user in self.sessao.listar():
             self.enviador.enviar(
                 remetente,
-                titulo,
+                usuario.email,
+                assunto,
                 corpo
             )
-
-

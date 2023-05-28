@@ -37,15 +37,12 @@ class Usuario :
 
 
 def test_salvar_usuario(sessao):
-
     # criando um usuario
     usuario=Usuario(nome='Adilson', email='adilson.garcia2006@hotmail.com')
     # salva o usuario no bd
     sessao.salvar( usuario )
     # certifica se o usuario foi salvo com um id numerico
     assert isinstance(usuario.id, int)
-
-
 
 def test_listar_usuarios(conexao, sessao):
     # etapa de setup
@@ -64,4 +61,3 @@ def test_listar_usuarios(conexao, sessao):
     # como uma sessao chamamos o metodo listar de uma sessao foi salvo com um id numerico
     assert usuarios == sessao.listar()
     # etapa de fear down
-

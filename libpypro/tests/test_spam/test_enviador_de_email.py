@@ -1,6 +1,5 @@
 import pytest
-
-from spam.enviador_de_email import Enviador, EmailInvalido
+from libpypro.spam.enviador_de_email import Enviador, EmailInvalido
 
 
 def test_ciar_enviador_de_email() :
